@@ -120,7 +120,7 @@
     saveState: true, loadState: true, gamepad: true,
     settings: false, screenRecord: false, screenshot: false, quickSave: false, quickLoad: false,
     cheat: false, cacheManager: false, saveSavFiles: false, loadSavFiles: false,
-    netplay: false, diskButton: false, exitEmulation: false, rightClick: false
+    netplay: false, diskButton: false, exitEmulation: false
   };
   // Touch pad for this game: D-pad, B = jump (A/Y also jump), X = pocket computer, Start, Select. No L/R (unused).
   window.EJS_VirtualGamepadSettings = [
@@ -138,6 +138,10 @@
   };
   window.EJS_onGameStart = function () {
     document.getElementById("helpBtn").style.display = "block";
+    // EmulatorJS ignores contextMenu:false, so hide that menu-bar button ourselves
+    Array.prototype.forEach.call(document.querySelectorAll(".ejs_menu_bar button"), function (b) {
+      if (b.textContent.trim() === "Context Menu") b.style.display = "none";
+    });
     window.__sherwoodStarted = true;
     resumeAudio();
   };
